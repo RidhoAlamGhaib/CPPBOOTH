@@ -11,7 +11,7 @@ set(CMAKE_AUTOMOC ON)
 #  (or -A x64 if you have the 64-bit EDSDK)
 # ══════════════════════════════════════════════
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Core Gui)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Core Gui PrintSupport)
 find_package(OpenCV REQUIRED COMPONENTS core imgproc imgcodecs videoio)
 
 # ── EDSDK path (edit if yours differs) ──
@@ -52,7 +52,7 @@ target_include_directories(${PROJECT_NAME} PRIVATE
 )
 
 target_link_libraries(${PROJECT_NAME} PRIVATE
-    Qt6::Widgets Qt6::Core Qt6::Gui
+    Qt6::Widgets Qt6::Core Qt6::Gui Qt6::PrintSupport
     ${OpenCV_LIBS}
 )
 

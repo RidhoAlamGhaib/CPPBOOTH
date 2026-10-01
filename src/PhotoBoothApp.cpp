@@ -17,6 +17,13 @@
 #include <QDateTime>
 #include <QDir>
 #include <QDebug>
+#include <QPainter>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QPageSize>
+#include <QPageLayout>
+#include <QMarginsF>
+#include <QSizeF>
 #include <opencv2/imgproc.hpp>
 
 
@@ -779,15 +786,39 @@ QWidget* PhotoBoothApp::buildPrint() {
     printBtn->setCursor(Qt::PointingHandCursor);
     connect(printBtn, &QPushButton::clicked, this, [this] {
         if (layoutImage_.empty()) return;
-        const QString tmp = QDir(sessionDir_.isEmpty() ? cfg_.output : sessionDir_)
-                                .filePath("print_layout.jpg");
-        if (!ImageService::save(layoutImage_, tmp)) {
-            QMessageBox::warning(this, QStringLiteral("Cetak"), QStringLiteral("Gagal menyiapkan berkas cetak."));
+
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setFullPage(true);
+        printer.setPageSize(QPageSize(QSizeF(cfg_.paperWmm, cfg_.paperHmm),
+                                      QPageSize::Millimeter));
+        printer.setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout::Millimeter);
+
+        QPrintDialog dlg(&printer, this);
+        dlg.setWindowTitle(QStringLiteral("Cetak"));
+        if (dlg.exec() != QDialog::Accepted) return;
+
+        const QImage page = ImageService::toQImage(layoutImage_);
+        if (page.isNull()) {
+            QMessageBox::warning(this, QStringLiteral("Cetak"),
+                                 QStringLiteral("Gambar tidak bisa disiapkan."));
             return;
         }
-        // Hand off to the OS default print verb
-        const std::wstring wpath = QDir::toNativeSeparators(tmp).toStdWString();
-        ShellExecuteW(nullptr, L"print", wpath.c_str(), nullptr, nullptr, SW_HIDE);
+
+        QPainter painter;
+        if (!painter.begin(&printer)) {
+            QMessageBox::warning(this, QStringLiteral("Cetak"),
+                                 QStringLiteral("Printer tidak bisa dibuka."));
+            return;
+        }
+        const QRectF target = printer.pageRect(QPrinter::DevicePixel);
+        const QSize scaled = page.size().scaled(target.size().toSize(), Qt::KeepAspectRatio);
+        const QRectF dst(target.x() + (target.width()  - scaled.width())  / 2.0,
+                         target.y() + (target.height() - scaled.height()) / 2.0,
+                         scaled.width(), scaled.height());
+        painter.drawImage(dst, page);
+        painter.end();
+
+        qInfo() << "[PRINT] sent to" << printer.printerName();
         QMessageBox::information(this, QStringLiteral("Cetak"),
                                  QStringLiteral("Dikirim ke printer."));
     });
@@ -966,20 +997,45 @@ void PhotoBoothApp::resetSession() {
 
 QString PhotoBoothApp::makeSessionDir() {
     const QDateTime now = QDateTime::currentDateTime();
-    const QString dir = QDir(cfg_.output).filePath(
-        now.toString("yyyy-MM-dd") + "/" + now.toString("HH-mm-ss"));
-    QDir().mkpath(dir);
+    // captures / <day> / <time>  — one folder per session.
+    const QString dir = QDir(cfg_.output)
+        .filePath(now.toString("yyyy-MM-dd") + "/" + now.toString("HH-mm-ss"));
+    if (!QDir().mkpath(dir))
+        qWarning() << "[SAVE] FAILED to create session dir" << dir;
+    else
+        qInfo() << "[SAVE] session dir" << dir;
     return dir;
 }
 
 void PhotoBoothApp::saveSessionFinal() {
-    if (sessionDir_.isEmpty() || layoutImage_.empty()) return;
-    if (!editedImage_.empty())
-        ImageService::save(editedImage_, QDir(sessionDir_).filePath("final_photo.jpg"));
-    ImageService::save(layoutImage_, QDir(sessionDir_).filePath("final_layout_4R.jpg"));
-    ImageService::savePdf(layoutImage_, QDir(sessionDir_).filePath("final_layout_4R.pdf"),
-                          cfg_.paperWmm, cfg_.paperHmm, cfg_.dpi);
-    qInfo() << "[SAVE] session deliverables written to" << sessionDir_;
+    if (sessionDir_.isEmpty()) {
+        qWarning() << "[SAVE] no session dir — nothing captured";
+        return;
+    }
+    QDir().mkpath(sessionDir_);   // guarantee the day/time folder exists
+
+    int ok = 0, fail = 0;
+    auto put = [&](const cv::Mat& m, const QString& name) {
+        if (m.empty()) return;
+        if (ImageService::save(m, QDir(sessionDir_).filePath(name))) ++ok; else ++fail;
+    };
+    // Every picture of this session, kept together in its own folder.
+    put(capturedImage_, "cropped.jpg");
+    put(editedImage_,   "edited.jpg");
+    put(editedImage_,   "final_photo.jpg");
+    put(layoutImage_,   "final_layout_4R.jpg");
+
+    bool pdfOk = false;
+    if (!layoutImage_.empty())
+        pdfOk = ImageService::savePdf(layoutImage_,
+                    QDir(sessionDir_).filePath("final_layout_4R.pdf"),
+                    cfg_.paperWmm, cfg_.paperHmm, cfg_.dpi);
+
+    qInfo() << "[SAVE] session saved to" << sessionDir_
+            << "images ok" << ok << "fail" << fail << "pdf" << pdfOk;
+
+    QMessageBox::information(this, QStringLiteral("Tersimpan"),
+        QStringLiteral("Tersimpan di:\n%1").arg(QDir::toNativeSeparators(sessionDir_)));
 }
 
 void PhotoBoothApp::onFrameReady(const QImage& mirrored) {
