@@ -806,7 +806,7 @@ QWidget* PhotoBoothApp::buildPrint() {
     auto* done = new QPushButton(QStringLiteral("✓  Selesai"));
     done->setStyleSheet(navButtonStyle());
     done->setCursor(Qt::PointingHandCursor);
-    connect(done, &QPushButton::clicked, this, [this] { resetSession(); goTo(HOME); });
+    connect(done, &QPushButton::clicked, this, [this] { saveSessionFinal(); resetSession(); goTo(HOME); });
     nav->addWidget(done);
     return w;
 }
@@ -830,17 +830,6 @@ void PhotoBoothApp::refreshPrint() {
     cv::Mat thumb;
     cv::resize(layoutImage_, thumb, cv::Size(), 0.3, 0.3, cv::INTER_AREA);
     printPreview_->setPixmap(ImageService::toPixmap(thumb, printPreview_->size()));
-
-    // Auto-save the final deliverables into this session's own folder so every
-    // session is kept separately: the single edited photo, the 4R sheet, and a
-    // print-ready PDF. Reflects the current size/margin settings.
-    if (!sessionDir_.isEmpty()) {
-        ImageService::save(editedImage_,  QDir(sessionDir_).filePath("final_photo.jpg"));
-        ImageService::save(layoutImage_,  QDir(sessionDir_).filePath("final_layout_4R.jpg"));
-        ImageService::savePdf(layoutImage_, QDir(sessionDir_).filePath("final_layout_4R.pdf"),
-                              cfg_.paperWmm, cfg_.paperHmm, cfg_.dpi);
-        qInfo() << "[SAVE] session deliverables written to" << sessionDir_;
-    }
 }
 
 // ══════════════════════════════════════════════════════
@@ -981,6 +970,16 @@ QString PhotoBoothApp::makeSessionDir() {
         now.toString("yyyy-MM-dd") + "/" + now.toString("HH-mm-ss"));
     QDir().mkpath(dir);
     return dir;
+}
+
+void PhotoBoothApp::saveSessionFinal() {
+    if (sessionDir_.isEmpty() || layoutImage_.empty()) return;
+    if (!editedImage_.empty())
+        ImageService::save(editedImage_, QDir(sessionDir_).filePath("final_photo.jpg"));
+    ImageService::save(layoutImage_, QDir(sessionDir_).filePath("final_layout_4R.jpg"));
+    ImageService::savePdf(layoutImage_, QDir(sessionDir_).filePath("final_layout_4R.pdf"),
+                          cfg_.paperWmm, cfg_.paperHmm, cfg_.dpi);
+    qInfo() << "[SAVE] session deliverables written to" << sessionDir_;
 }
 
 void PhotoBoothApp::onFrameReady(const QImage& mirrored) {
