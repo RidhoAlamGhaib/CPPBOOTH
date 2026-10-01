@@ -70,6 +70,7 @@ void CameraThread::run() {
         // Capture requested by captureFrame() — run it here, on the thread
         // that owns the EDSDK session, with live-view polling paused.
         if (capRequested_.exchange(false)) {
+            qInfo() << "[CAP] camera thread picked up capture request";
             cv::Mat shot = captureEdsdk();
             evfFailStreak_ = 0;   // live view blanks ~1-2 s after a shot — don't treat as dead
             QMutexLocker lk(&capReqMu_);
@@ -91,8 +92,10 @@ void CameraThread::run() {
             if (src == Source::Edsdk) {
                 // EVF hiccups are normal; only fall back after a long streak
                 if (++evfFailStreak_ > 150) {              // ~5 s at 30 fps
-                    emit errorText(QStringLiteral("EDSDK live view stopped — switching to OpenCV"));
-                    stopEdsdk();
+                    // Keep the EDSDK session open — the shutter still works
+                    // without live view. Only the preview moves to OpenCV.
+                    emit errorText(QStringLiteral("EDSDK live view stopped — preview via OpenCV, shutter stays on EDSDK"));
+                    edsdkCaptureOnly_ = sessionOpen_;
                     source_ = openOpenCv() ? Source::OpenCv : Source::None;
                     evfFailStreak_ = 0;
                 }
@@ -523,7 +526,12 @@ void CameraThread::handleDirItemTransfer(eds::BaseRef dirItem) {
 }
 
 cv::Mat CameraThread::captureEdsdk() {
-    if (!eds_ || !camera_) return {};
+    if (!eds_ || !camera_) {
+        qWarning() << "[EDS] capture skipped — no EDSDK session (eds" << (eds_ != nullptr)
+                   << "camera" << (camera_ != nullptr) << ")";
+        return {};
+    }
+    qInfo() << "[EDS] firing shutter";
     const auto& api = eds_->api();
 
     const QString target =
@@ -598,7 +606,12 @@ cv::Mat CameraThread::captureEdsdk() {
 // ══════════════════════════════════════════════════════
 
 cv::Mat CameraThread::captureFrame() {
+    qInfo() << "[CAP] captureFrame source" << static_cast<int>(source_.load())
+            << "captureOnly" << edsdkCaptureOnly_.load()
+            << "eds" << (eds_ != nullptr) << "camera" << (camera_ != nullptr)
+            << "threadRunning" << isRunning();
     if ((source_.load() == Source::Edsdk || edsdkCaptureOnly_.load()) && isRunning()) {
+        qInfo() << "[CAP] queue shutter request to camera thread";
         QMutexLocker lk(&capReqMu_);
         capResultReady_ = false;
         capResult_.release();
@@ -606,8 +619,14 @@ cv::Mat CameraThread::captureFrame() {
         // captureEdsdk() itself gives up after ~20 s; allow a little more.
         const QDeadlineTimer deadline(25000);
         while (!capResultReady_ && capReqCv_.wait(&capReqMu_, deadline)) {}
-        if (!capResultReady_) capRequested_ = false;  // timed out — cancel
+        if (!capResultReady_) {
+            capRequested_ = false;  // timed out — cancel
+            qWarning() << "[CAP] camera thread never answered capture request (25 s)";
+        }
         if (!capResult_.empty()) return capResult_;
+        qWarning() << "[CAP] EDSDK capture failed — falling back to preview frame";
+    } else {
+        qWarning() << "[CAP] EDSDK not active — using preview frame (no shutter)";
     }
     QMutexLocker lk(&frameMu_);
     return lastProcessed_.empty() ? cv::Mat() : lastProcessed_.clone();
