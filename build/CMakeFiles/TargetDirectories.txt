@@ -1,0 +1,5 @@
+C:/Users/Asus/Documents/idbooth/build/CMakeFiles/IDPhotoBooth.dir
+C:/Users/Asus/Documents/idbooth/build/CMakeFiles/IDPhotoBooth_autogen_timestamp_deps.dir
+C:/Users/Asus/Documents/idbooth/build/CMakeFiles/IDPhotoBooth_autogen.dir
+C:/Users/Asus/Documents/idbooth/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Asus/Documents/idbooth/build/CMakeFiles/ZERO_CHECK.dir

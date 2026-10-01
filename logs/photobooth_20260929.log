@@ -1,0 +1,12 @@
+22:08:33.042 INFO  ==================================================
+22:08:33.042 INFO  ID Photo Booth starting
+22:08:33.043 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+22:08:33.043 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260929.log"
+22:08:33.043 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+22:08:33.043 INFO  ==================================================
+22:08:33.062 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+22:08:38.881 WARN  [EDS] LoadLibrary failed for "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll" err 0
+22:08:38.884 WARN  [EDS] LoadLibrary failed for "C:/Users/Asus/Documents/idbooth/build/Release/../../EDSDK/Dll/EDSDK.dll" err 0
+22:08:38.897 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/../../edsdk/EDSDK.dll"
+22:08:39.227 WARN  [CAM] "No Canon camera detected by EDSDK"
+22:08:49.264 INFO  Exiting with code 0

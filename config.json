@@ -1,0 +1,71 @@
+{
+    "border_gap_mm": 1.5,
+    "camera": {
+        "edsdk_dll": "",
+        "fps": 30,
+        "height": "auto",
+        "index": "auto",
+        "prefer_edsdk": true,
+        "width": "auto"
+    },
+    "countdown": 3,
+    "dpi": 300,
+    "language": "id",
+    "margin_mm": 1.5,
+    "output": "C:/Users/Asus/Documents/idbooth/captures",
+    "paper_h_mm": 102,
+    "paper_w_mm": 152,
+    "photo_sizes": [
+        {
+            "h_mm": 30,
+            "name": "2x3cm",
+            "w_mm": 20
+        },
+        {
+            "h_mm": 40,
+            "name": "3x4cm",
+            "w_mm": 30
+        },
+        {
+            "h_mm": 48,
+            "name": "3.3x4.8cm",
+            "w_mm": 33
+        },
+        {
+            "h_mm": 45,
+            "name": "3.5x4.5cm",
+            "w_mm": 35
+        },
+        {
+            "h_mm": 60,
+            "name": "4x6cm",
+            "w_mm": 40
+        },
+        {
+            "h_mm": 45,
+            "name": "4.5x4.5cm",
+            "w_mm": 45
+        },
+        {
+            "h_mm": 50,
+            "name": "5x5cm",
+            "w_mm": 50
+        },
+        {
+            "h_mm": 45,
+            "name": "Passport",
+            "w_mm": 35
+        },
+        {
+            "h_mm": 50,
+            "name": "Visa",
+            "w_mm": 50
+        }
+    ],
+    "theme": {
+        "accent": "#FFE84A",
+        "background": "#2F6DB3",
+        "orange": "#E07B1A",
+        "primary": "#165AA7"
+    }
+}

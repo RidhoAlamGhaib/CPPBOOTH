@@ -1,0 +1,104 @@
+12:10:49.201 INFO  ==================================================
+12:10:49.201 INFO  ID Photo Booth starting
+12:10:49.201 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+12:10:49.201 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+12:10:49.201 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+12:10:49.201 INFO  ==================================================
+12:10:49.203 INFO  [CFG] no config at "C:/Users/Asus/Documents/idbooth/config.json" — writing defaults
+12:10:53.876 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll"
+12:10:53.937 WARN  [CAM] "No Canon camera detected by EDSDK"
+12:11:01.102 INFO  Exiting with code 0
+13:10:11.718 INFO  ==================================================
+13:10:11.718 INFO  ID Photo Booth starting
+13:10:11.718 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+13:10:11.718 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+13:10:11.718 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+13:10:11.718 INFO  ==================================================
+13:10:11.720 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+13:10:16.097 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll"
+13:10:16.126 WARN  [CAM] "No Canon camera detected by EDSDK"
+13:10:29.683 INFO  Exiting with code 0
+16:35:56.680 INFO  ==================================================
+16:35:56.680 INFO  ID Photo Booth starting
+16:35:56.680 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+16:35:56.680 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+16:35:56.680 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+16:35:56.680 INFO  ==================================================
+16:35:56.680 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+16:36:03.337 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll"
+16:36:03.902 WARN  [CAM] "EdsOpenSession failed 0x00000007 (UNKNOWN) — close EOS Utility / Webcam Utility"
+16:36:31.034 INFO  Exiting with code 0
+16:46:45.881 INFO  ==================================================
+16:46:45.881 INFO  ID Photo Booth starting
+16:46:45.881 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+16:46:45.881 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+16:46:45.896 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+16:46:45.896 INFO  ==================================================
+16:46:45.896 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+16:46:52.635 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll"
+16:46:53.222 WARN  [CAM] "EdsOpenSession failed 0x00000007 (UNKNOWN) — close EOS Utility / Webcam Utility"
+16:46:59.787 INFO  Exiting with code 0
+16:51:10.832 INFO  ==================================================
+16:51:10.832 INFO  ID Photo Booth starting
+16:51:10.832 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+16:51:10.832 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+16:51:10.832 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+16:51:10.832 INFO  ==================================================
+16:51:10.848 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+16:51:16.046 WARN  [EDS] LoadLibrary failed for "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll" err 0
+16:51:16.052 WARN  [EDS] LoadLibrary failed for "C:/Users/Asus/Documents/idbooth/build/Release/../../EDSDK/Dll/EDSDK.dll" err 0
+16:51:16.064 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/../../edsdk/EDSDK.dll"
+16:51:16.621 WARN  [CAM] "EdsOpenSession failed 0x00000007 (UNKNOWN) — close EOS Utility / Webcam Utility"
+16:51:21.208 INFO  Exiting with code 0
+16:55:09.243 INFO  ==================================================
+16:55:09.243 INFO  ID Photo Booth starting
+16:55:09.243 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+16:55:09.243 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+16:55:09.243 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+16:55:09.243 INFO  ==================================================
+16:55:09.243 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+16:55:13.961 WARN  [EDS] LoadLibrary failed for "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll" err 0
+16:55:13.966 WARN  [EDS] LoadLibrary failed for "C:/Users/Asus/Documents/idbooth/build/Release/../../EDSDK/Dll/EDSDK.dll" err 0
+16:55:13.966 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/../../edsdk/EDSDK.dll"
+16:55:14.538 WARN  [CAM] "EdsOpenSession failed 0x00000007 (UNKNOWN) — close EOS Utility / Webcam Utility"
+16:55:22.730 INFO  Exiting with code 0
+16:56:44.212 INFO  ==================================================
+16:56:44.212 INFO  ID Photo Booth starting
+16:56:44.212 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+16:56:44.212 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+16:56:44.212 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+16:56:44.212 INFO  ==================================================
+16:56:44.228 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+16:56:50.322 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll"
+16:56:50.902 WARN  [CAM] "EdsOpenSession failed 0x00000007 (UNKNOWN) — close EOS Utility / Webcam Utility"
+16:56:58.560 INFO  Exiting with code 0
+16:58:37.706 INFO  ==================================================
+16:58:37.706 INFO  ID Photo Booth starting
+16:58:37.706 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+16:58:37.706 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+16:58:37.706 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+16:58:37.706 INFO  ==================================================
+16:58:37.706 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+16:58:42.796 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll"
+16:58:43.373 WARN  [CAM] "EdsOpenSession failed 0x00000007 (UNKNOWN) — close EOS Utility / Webcam Utility"
+16:58:47.365 INFO  Exiting with code 0
+17:06:39.036 INFO  ==================================================
+17:06:39.036 INFO  ID Photo Booth starting
+17:06:39.036 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+17:06:39.036 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+17:06:39.036 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+17:06:39.036 INFO  ==================================================
+17:06:39.038 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+17:06:44.017 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll"
+17:06:44.063 WARN  [CAM] "No Canon camera detected by EDSDK"
+17:06:53.307 INFO  Exiting with code 0
+17:08:08.450 INFO  ==================================================
+17:08:08.450 INFO  ID Photo Booth starting
+17:08:08.450 INFO    Base dir: "C:/Users/Asus/Documents/idbooth"
+17:08:08.450 INFO    Log file: "C:/Users/Asus/Documents/idbooth/logs/photobooth_20260917.log"
+17:08:08.450 INFO    Config  : "C:/Users/Asus/Documents/idbooth/config.json"
+17:08:08.450 INFO  ==================================================
+17:08:08.450 INFO  [CFG] loaded "C:/Users/Asus/Documents/idbooth/config.json" - 9 sizes
+17:08:13.445 INFO  [EDS] loaded "C:/Users/Asus/Documents/idbooth/build/Release/EDSDK.dll"
+17:08:13.485 WARN  [CAM] "No Canon camera detected by EDSDK"
+17:08:20.349 INFO  Exiting with code 0

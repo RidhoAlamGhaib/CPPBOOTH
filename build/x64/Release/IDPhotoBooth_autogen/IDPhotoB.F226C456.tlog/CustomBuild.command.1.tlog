@@ -1,0 +1,40 @@
+^C:\USERS\ASUS\DOCUMENTS\IDBOOTH\BUILD\CMAKEFILES\D380AA27F800B944E21F25EE1A171AD3\TIMESTAMP.RULE
+setlocal
+cd C:\Users\Asus\Documents\idbooth\build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_autogen C:/Users/Asus/Documents/idbooth/build/CMakeFiles/IDPhotoBooth_autogen.dir/AutogenInfo.json Release
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E touch C:/Users/Asus/Documents/idbooth/build/IDPhotoBooth_autogen/timestamp
+if %errorlevel% neq 0 goto :cmEnd
+"C:\Program Files\CMake\bin\cmake.exe" -E cmake_transform_depfile "Visual Studio 16 2019" MSBuildAdditionalInputs C:/Users/Asus/Documents/idbooth C:/Users/Asus/Documents/idbooth C:/Users/Asus/Documents/idbooth/build C:/Users/Asus/Documents/idbooth/build C:/Users/Asus/Documents/idbooth/build/IDPhotoBooth_autogen/deps C:/Users/Asus/Documents/idbooth/build/CMakeFiles/d/b66e9be1c81607f1ba8eab35ab80af8c795701f58063bb1713b637a8468c3c60.AdditionalInputs
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\ASUS\DOCUMENTS\IDBOOTH\BUILD\CMAKEFILES\31D8EF19FD62FCFE6745B433AA86A05A\IDPHOTOBOOTH_AUTOGEN.RULE
+setlocal
+cd C:\Users\Asus\Documents\idbooth\build
+if %errorlevel% neq 0 goto :cmEnd
+C:
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^C:\USERS\ASUS\DOCUMENTS\IDBOOTH\CMAKELISTS.TXT
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Asus/Documents/idbooth -BC:/Users/Asus/Documents/idbooth/build --check-stamp-file C:/Users/Asus/Documents/idbooth/build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
