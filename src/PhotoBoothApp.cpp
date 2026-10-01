@@ -367,6 +367,19 @@ QWidget* PhotoBoothApp::buildCamera() {
     rotRow->addWidget(rr);
     tl->addLayout(rotRow);
 
+    // Refresh / reconnect camera (clears a stuck 'busy' state)
+    auto* refreshBtn = new QPushButton(QStringLiteral("🔄  Refresh Kamera"));
+    refreshBtn->setStyleSheet(toolButtonStyle());
+    refreshBtn->setCursor(Qt::PointingHandCursor);
+    connect(refreshBtn, &QPushButton::clicked, this, [this, refreshBtn] {
+        refreshBtn->setEnabled(false);
+        if (camInfoLabel_) camInfoLabel_->setText(QStringLiteral("🔄 Menyegarkan kamera…"));
+        camera_->resetAdjustments();
+        camera_->restart();
+        QTimer::singleShot(1500, this, [refreshBtn] { refreshBtn->setEnabled(true); });
+    });
+    tl->addWidget(refreshBtn);
+
     auto mkLabel = [](const QString& t) {
         auto* x = new QLabel(t);
         x->setStyleSheet("color: white; font-size: 14px; background: transparent;");

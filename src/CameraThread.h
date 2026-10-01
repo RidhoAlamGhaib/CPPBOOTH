@@ -47,6 +47,10 @@ public:
 
     void stop();
 
+    // Full teardown + restart of the capture thread. Re-initializes the EDSDK
+    // session, which clears a 'busy' state the app itself was holding.
+    void restart() { stop(); start(); }
+
     // Blocking capture. On EDSDK: fires real shutter → full-res.
     // On OpenCV: returns the latest processed frame.
     cv::Mat captureFrame();
