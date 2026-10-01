@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QCoreApplication>
 #include <QDebug>
+#include <QDeadlineTimer>
 #include <windows.h>
 
 // Single instance pointer so the C-style EDSDK callback can find us.
@@ -66,6 +67,19 @@ void CameraThread::run() {
     int reconnectCountdown = 0;
 
     while (running_.load()) {
+        // Capture requested by captureFrame() — run it here, on the thread
+        // that owns the EDSDK session, with live-view polling paused.
+        if (capRequested_.exchange(false)) {
+            qInfo() << "[CAP] camera thread picked up capture request";
+            cv::Mat shot = captureEdsdk();
+            evfFailStreak_ = 0;   // live view blanks ~1-2 s after a shot — don't treat as dead
+            QMutexLocker lk(&capReqMu_);
+            capResult_      = shot;
+            capResultReady_ = true;
+            capReqCv_.wakeAll();
+            continue;
+        }
+
         cv::Mat raw;
         const Source src = source_.load();
 
@@ -78,8 +92,10 @@ void CameraThread::run() {
             if (src == Source::Edsdk) {
                 // EVF hiccups are normal; only fall back after a long streak
                 if (++evfFailStreak_ > 150) {              // ~5 s at 30 fps
-                    emit errorText(QStringLiteral("EDSDK live view stopped — switching to OpenCV"));
-                    stopEdsdk();
+                    // Keep the EDSDK session open — the shutter still works
+                    // without live view. Only the preview moves to OpenCV.
+                    emit errorText(QStringLiteral("EDSDK live view stopped — preview via OpenCV, shutter stays on EDSDK"));
+                    edsdkCaptureOnly_ = sessionOpen_;
                     source_ = openOpenCv() ? Source::OpenCv : Source::None;
                     evfFailStreak_ = 0;
                 }
@@ -210,8 +226,7 @@ bool CameraThread::tryStartEdsdk() {
         STEP(QString("OpenSession attempt %1").arg(attempt).toLatin1().constData(), err);
         if (err == eds::OK) break;
 
-        if ((err == eds::DEVICE_INTERNAL_ERROR || err == eds::DEVICE_BUSY_D ||
-             err == eds::DEVICE_BUSY) && attempt < 2) {
+        if ((err == eds::DEVICE_INTERNAL_ERROR || err == eds::DEVICE_BUSY) && attempt < 2) {
             pumpWindowsMessages();
             msleep(500 * (attempt + 1));
             continue;
@@ -243,6 +258,12 @@ bool CameraThread::tryStartEdsdk() {
     eds::Capacity cap{0x7FFFFFFF, 0x1000, 1};
     err = api.SetCapacity(camera_, cap);
     STEP("SetCapacity", err);
+
+    // JPEG Middle Fine (~12MP on 200D II) is plenty for ID photos and is
+    // roughly half the USB transfer of Large Fine → much faster capture.
+    uint32_t quality = eds::ImageQuality_MJF;
+    err = api.SetPropertyData(camera_, eds::PROP_ImageQuality, 0, sizeof(quality), &quality);
+    STEP("SetPropertyData(ImageQuality=M Fine)", err);
 
     api.SetObjectEventHandler(camera_, eds::OBJEVENT_All, &CameraThread::onObjectEvent, nullptr);
     // Property + state handlers are required for EdsGetEvent to deliver the
@@ -337,7 +358,7 @@ bool CameraThread::tryStartEdsdk() {
                         << QString("0x%1").arg(grabErr, 8, 16, QChar('0'))
                         << eds::errorName(grabErr);
 
-            if (grabErr != eds::OBJECT_NOTREADY_EVF && grabErr != eds::OBJECT_NOTREADY) {
+            if (grabErr != eds::OBJECT_NOTREADY) {
                 qInfo() << "[EDS] hard error while waiting, aborting cycle";
                 break;
             }
@@ -505,7 +526,12 @@ void CameraThread::handleDirItemTransfer(eds::BaseRef dirItem) {
 }
 
 cv::Mat CameraThread::captureEdsdk() {
-    if (!eds_ || !camera_) return {};
+    if (!eds_ || !camera_) {
+        qWarning() << "[EDS] capture skipped — no EDSDK session (eds" << (eds_ != nullptr)
+                   << "camera" << (camera_ != nullptr) << ")";
+        return {};
+    }
+    qInfo() << "[EDS] firing shutter";
     const auto& api = eds_->api();
 
     const QString target =
@@ -515,6 +541,8 @@ cv::Mat CameraThread::captureEdsdk() {
     { QMutexLocker lk(&capMu_); capPath_ = target; }
     capDone_ = false;
     capOk_   = false;
+
+    QElapsedTimer capTimer; capTimer.start();
 
     // Fire the shutter. In live view the body does a mirror/exposure cycle then
     // resumes live view — that's the irreducible mechanical delay. We fire with
@@ -526,6 +554,17 @@ cv::Mat CameraThread::captureEdsdk() {
                                          eds::SHUTTER_Completely);
         api.SendCommand(camera_, eds::CMD_PressShutterButton, eds::SHUTTER_OFF);
         if (err == eds::OK) { fired = true; break; }
+        // AF couldn't lock (low light / low contrast / plain backdrop). Fire
+        // anyway without autofocus — focus stays where the lens already is,
+        // which for a fixed-distance booth is fine. TakePicture would AF again
+        // and fail the same way, so don't fall through to it.
+        if (err == eds::TAKE_PICTURE_AF_NG) {
+            qWarning() << "[EDS] AF failed to lock — firing without AF";
+            err = api.SendCommand(camera_, eds::CMD_PressShutterButton,
+                                  eds::SHUTTER_Completely_NonAF);
+            api.SendCommand(camera_, eds::CMD_PressShutterButton, eds::SHUTTER_OFF);
+            if (err == eds::OK) { fired = true; break; }
+        }
         if (err == eds::DEVICE_BUSY || err == eds::OBJECT_NOTREADY) {
             msleep(30);
             continue;
@@ -541,6 +580,7 @@ cv::Mat CameraThread::captureEdsdk() {
         return {};
     }
     if (!fired) { emit errorText(QStringLiteral("Camera busy — shutter not fired")); return {}; }
+    qInfo() << "[EDS] shutter fired in" << capTimer.elapsed() << "ms";
 
     // Poll for the download callback fast.
     const qint64 deadline = QDateTime::currentMSecsSinceEpoch() + 20000;
@@ -551,10 +591,12 @@ cv::Mat CameraThread::captureEdsdk() {
     }
 
     if (!capOk_.load()) { emit errorText(QStringLiteral("Capture timed out")); return {}; }
+    qInfo() << "[EDS] shutter → file on disk in" << capTimer.elapsed() << "ms";
 
     cv::Mat img = cv::imread(target.toLocal8Bit().constData(), cv::IMREAD_COLOR);
     QFile::remove(target);
     if (img.empty()) { emit errorText(QStringLiteral("Downloaded file unreadable")); return {}; }
+    qInfo() << "[EDS] capture total" << capTimer.elapsed() << "ms";
 
     return applyAdjustments(img);
 }
@@ -564,9 +606,27 @@ cv::Mat CameraThread::captureEdsdk() {
 // ══════════════════════════════════════════════════════
 
 cv::Mat CameraThread::captureFrame() {
-    if (source_.load() == Source::Edsdk || edsdkCaptureOnly_.load()) {
-        cv::Mat full = captureEdsdk();
-        if (!full.empty()) return full;
+    qInfo() << "[CAP] captureFrame source" << static_cast<int>(source_.load())
+            << "captureOnly" << edsdkCaptureOnly_.load()
+            << "eds" << (eds_ != nullptr) << "camera" << (camera_ != nullptr)
+            << "threadRunning" << isRunning();
+    if ((source_.load() == Source::Edsdk || edsdkCaptureOnly_.load()) && isRunning()) {
+        qInfo() << "[CAP] queue shutter request to camera thread";
+        QMutexLocker lk(&capReqMu_);
+        capResultReady_ = false;
+        capResult_.release();
+        capRequested_ = true;
+        // captureEdsdk() itself gives up after ~20 s; allow a little more.
+        const QDeadlineTimer deadline(25000);
+        while (!capResultReady_ && capReqCv_.wait(&capReqMu_, deadline)) {}
+        if (!capResultReady_) {
+            capRequested_ = false;  // timed out — cancel
+            qWarning() << "[CAP] camera thread never answered capture request (25 s)";
+        }
+        if (!capResult_.empty()) return capResult_;
+        qWarning() << "[CAP] EDSDK capture failed — falling back to preview frame";
+    } else {
+        qWarning() << "[CAP] EDSDK not active — using preview frame (no shutter)";
     }
     QMutexLocker lk(&frameMu_);
     return lastProcessed_.empty() ? cv::Mat() : lastProcessed_.clone();

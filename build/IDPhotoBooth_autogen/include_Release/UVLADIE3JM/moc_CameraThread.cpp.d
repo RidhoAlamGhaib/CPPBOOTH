@@ -1,7 +1,9 @@
 C:/Users/Asus/Documents/idbooth/build/IDPhotoBooth_autogen/include_Release/UVLADIE3JM/moc_CameraThread.cpp: C:/Users/Asus/Documents/idbooth/src/CameraThread.h \
+  C:/Qt/6.7.3/msvc2022_64/include/QtCore/QDeadlineTimer \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/QMutex \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/QString \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/QThread \
+  C:/Qt/6.7.3/msvc2022_64/include/QtCore/QWaitCondition \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/q20functional.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/q20memory.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/q20type_traits.h \
@@ -109,6 +111,7 @@ C:/Users/Asus/Documents/idbooth/build/IDPhotoBooth_autogen/include_Release/UVLAD
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/qtypes.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/qutf8stringview.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/qversiontagging.h \
+  C:/Qt/6.7.3/msvc2022_64/include/QtCore/qwaitcondition.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/qxptype_traits.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/qyieldcpu.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtGui/QImage \

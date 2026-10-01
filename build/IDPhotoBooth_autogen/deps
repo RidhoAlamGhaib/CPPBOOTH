@@ -36,6 +36,7 @@ IDPhotoBooth_autogen/timestamp: \
 	C:/Program\ Files/CMake/share/cmake-4.4/Modules/Platform/Windows-MSVC.cmake \
 	C:/Program\ Files/CMake/share/cmake-4.4/Modules/Platform/Windows.cmake \
 	C:/Program\ Files/CMake/share/cmake-4.4/Modules/Platform/WindowsPaths.cmake \
+	C:/Qt/6.7.3/msvc2022_64/include/QtCore/QDeadlineTimer \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/QList \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/QMap \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/QMutex \
@@ -49,6 +50,7 @@ IDPhotoBooth_autogen/timestamp: \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/QThread \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/QTimer \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/QVector \
+	C:/Qt/6.7.3/msvc2022_64/include/QtCore/QWaitCondition \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/q20functional.h \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/q20memory.h \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/q20type_traits.h \
@@ -182,6 +184,7 @@ IDPhotoBooth_autogen/timestamp: \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/qvarlengtharray.h \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/qvector.h \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/qversiontagging.h \
+	C:/Qt/6.7.3/msvc2022_64/include/QtCore/qwaitcondition.h \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/qxptype_traits.h \
 	C:/Qt/6.7.3/msvc2022_64/include/QtCore/qyieldcpu.h \
 	C:/Qt/6.7.3/msvc2022_64/include/QtGui/QImage \

@@ -426,7 +426,9 @@ QWidget* PhotoBoothApp::buildCamera() {
 }
 
 void PhotoBoothApp::startCountdown() {
-    if (selectedSizeIdx_ < 0) return;
+    qInfo() << "[UI] capture button pressed, size idx" << selectedSizeIdx_
+            << "countdown" << cfg_.countdown;
+    if (selectedSizeIdx_ < 0) { qWarning() << "[UI] no size selected — capture ignored"; return; }
     captureBtn_->setEnabled(false);
 
     countdownValue_ = cfg_.countdown;
@@ -450,6 +452,7 @@ void PhotoBoothApp::onCountdownTick() {
 }
 
 void PhotoBoothApp::doCapture() {
+    qInfo() << "[UI] doCapture";
     // Flash
     flashLbl_->setGeometry(stack_->currentWidget()->rect());
     flashLbl_->show();
@@ -475,6 +478,7 @@ void PhotoBoothApp::doCapture() {
 }
 
 void PhotoBoothApp::finishCapture(const cv::Mat& frame) {
+    qInfo() << "[UI] finishCapture" << frame.cols << "x" << frame.rows;
     processingLbl_->hide();
     captureBtn_->setEnabled(true);
 

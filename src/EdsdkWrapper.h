@@ -27,32 +27,38 @@ namespace eds {
 using Error    = unsigned int;
 using BaseRef  = void*;
 
-constexpr Error OK                 = 0x00000000;
-constexpr Error DEVICE_NOT_FOUND        = 0x00000002;
-constexpr Error DEVICE_BUSY_D           = 0x00000003;   // "device busy" (low-code group)
-constexpr Error DEVICE_INVALID          = 0x00000004;
-constexpr Error DEVICE_EMERGENCY        = 0x00000005;
-constexpr Error DEVICE_MEMORY_FULL      = 0x00000006;
-constexpr Error DEVICE_INTERNAL_ERROR   = 0x00000007;
-constexpr Error DEVICE_INVALID_PARAM    = 0x00000008;
-constexpr Error DEVICE_NO_DISK          = 0x00000009;
-constexpr Error DEVICE_DISK_ERROR       = 0x0000000A;
-constexpr Error DEVICE_CF_GATE_CHANGED  = 0x0000000B;
-constexpr Error DEVICE_DIAL_CHANGED     = 0x0000000C;
-constexpr Error DEVICE_NOT_INSTALLED    = 0x0000000D;
-// EVF-family error: sensor/live-view engine not ready yet. Seen while the
-// camera is still warming up its live-view stream, or when Live View is
-// disabled in the camera's own menu.
-// 0xA102 is EDS_ERR_OBJECT_NOTREADY: the live-view image set isn't ready yet.
-// The SDK explicitly says to RETRY on this — it's expected during warm-up.
-constexpr Error OBJECT_NOTREADY_EVF = 0x0000A102;
-constexpr Error DEVICE_STAY_AWAKE       = 0x0000000E;
-constexpr Error DEVICE_NOT_RELEASED     = 0x0000000F;
-constexpr Error DEVICE_BUSY        = 0x00000081;   // "high-code" busy group (comms layer)
-constexpr Error OBJECT_NOTREADY    = 0x00000041;
-constexpr Error PROPERTIES_UNAVAILABLE = 0x00000061;
-constexpr Error COMM_DISCONNECTED  = 0x000000C3;
-constexpr Error INVALID_HANDLE     = 0x00000060;
+constexpr Error OK                      = 0x00000000;
+// Values must match EDSDKErrors.h exactly.
+constexpr Error PROPERTIES_UNAVAILABLE  = 0x00000050;
+constexpr Error INVALID_HANDLE          = 0x00000061;
+constexpr Error DEVICE_NOT_FOUND        = 0x00000080;
+constexpr Error DEVICE_BUSY             = 0x00000081;
+constexpr Error DEVICE_INVALID          = 0x00000082;
+constexpr Error DEVICE_EMERGENCY        = 0x00000083;
+constexpr Error DEVICE_MEMORY_FULL      = 0x00000084;
+constexpr Error DEVICE_INTERNAL_ERROR   = 0x00000085;
+constexpr Error DEVICE_INVALID_PARAM    = 0x00000086;
+constexpr Error DEVICE_NO_DISK          = 0x00000087;
+constexpr Error DEVICE_DISK_ERROR       = 0x00000088;
+constexpr Error DEVICE_CF_GATE_CHANGED  = 0x00000089;
+constexpr Error DEVICE_DIAL_CHANGED     = 0x0000008A;
+constexpr Error DEVICE_NOT_INSTALLED    = 0x0000008B;
+constexpr Error DEVICE_STAY_AWAKE       = 0x0000008C;
+constexpr Error DEVICE_NOT_RELEASED     = 0x0000008D;
+constexpr Error COMM_DISCONNECTED       = 0x000000C1;
+// EDS_ERR_OBJECT_NOTREADY: live-view image not ready yet. SDK says retry.
+constexpr Error OBJECT_NOTREADY         = 0x0000A102;
+
+// Take-picture errors (EDS_ERR_TAKE_PICTURE_*) — returned by the shutter commands
+constexpr Error TAKE_PICTURE_AF_NG           = 0x00008D01;  // autofocus failed to lock
+constexpr Error TAKE_PICTURE_MIRROR_UP_NG    = 0x00008D03;
+constexpr Error TAKE_PICTURE_SENSOR_CLEANING_NG = 0x00008D04;
+constexpr Error TAKE_PICTURE_NO_CARD_NG      = 0x00008D06;
+constexpr Error TAKE_PICTURE_CARD_NG         = 0x00008D07;
+constexpr Error TAKE_PICTURE_CARD_PROTECT_NG = 0x00008D08;
+constexpr Error TAKE_PICTURE_STROBO_CHARGE_NG = 0x00008D0A;
+constexpr Error TAKE_PICTURE_NO_LENS_NG      = 0x00008D0B;
+constexpr Error TAKE_PICTURE_MOVIE_MODE_NG   = 0x00008D0E;
 
 constexpr uint32_t CMD_TakePicture        = 0x00000000;
 constexpr uint32_t CMD_PressShutterButton = 0x00000004;
@@ -64,8 +70,10 @@ constexpr uint32_t SHUTTER_OFF              = 0x00000000;
 constexpr uint32_t SaveTo_Host = 2;
 
 constexpr uint32_t PROP_SaveTo            = 0x0000000B;
-constexpr uint32_t PROP_Evf_OutputDevice  = 0x00000501;  // SDK: output device for live view
-constexpr uint32_t PROP_Evf_Mode          = 0x00000502;  // SDK: status of live view
+constexpr uint32_t PROP_ImageQuality      = 0x00000100;  // kEdsPropID_ImageQuality
+constexpr uint32_t ImageQuality_MJF       = 0x0113FF0F;  // JPEG Middle Fine
+constexpr uint32_t PROP_Evf_OutputDevice  = 0x00000500;  // kEdsPropID_Evf_OutputDevice
+constexpr uint32_t PROP_Evf_Mode          = 0x00000501;  // kEdsPropID_Evf_Mode
 
 // EdsSendStatusCommand — camera UI lock. Some bodies won't stream live view
 // to the PC until the host locks the camera's own UI first.
