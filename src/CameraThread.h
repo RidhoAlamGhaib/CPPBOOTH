@@ -11,6 +11,7 @@
 
 #include <QThread>
 #include <QMutex>
+#include <QWaitCondition>
 #include <QImage>
 #include <QString>
 #include <atomic>
@@ -120,6 +121,15 @@ private:
     std::atomic<bool> capDone_{false};
     std::atomic<bool> capOk_{false};
     QString          capPath_;
+
+    // Capture request handoff. EDSDK is not thread-safe, so the shutter must
+    // fire on THIS thread (the one that owns the session), never on the
+    // caller's thread while run() is still hammering DownloadEvfImage.
+    QMutex           capReqMu_;
+    QWaitCondition   capReqCv_;
+    std::atomic<bool> capRequested_{false};
+    bool             capResultReady_ = false;
+    cv::Mat          capResult_;
 
     // OpenCV
     cv::VideoCapture cap_;

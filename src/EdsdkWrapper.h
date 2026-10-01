@@ -70,6 +70,8 @@ constexpr uint32_t SHUTTER_OFF              = 0x00000000;
 constexpr uint32_t SaveTo_Host = 2;
 
 constexpr uint32_t PROP_SaveTo            = 0x0000000B;
+constexpr uint32_t PROP_ImageQuality      = 0x00000100;  // kEdsPropID_ImageQuality
+constexpr uint32_t ImageQuality_MJF       = 0x0113FF0F;  // JPEG Middle Fine
 constexpr uint32_t PROP_Evf_OutputDevice  = 0x00000500;  // kEdsPropID_Evf_OutputDevice
 constexpr uint32_t PROP_Evf_Mode          = 0x00000501;  // kEdsPropID_Evf_Mode
 
