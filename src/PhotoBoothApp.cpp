@@ -837,7 +837,7 @@ QWidget* PhotoBoothApp::buildPrint() {
     auto* done = new QPushButton(QStringLiteral("✓  Selesai"));
     done->setStyleSheet(navButtonStyle());
     done->setCursor(Qt::PointingHandCursor);
-    connect(done, &QPushButton::clicked, this, [this] { saveSessionFinal(); resetSession(); goTo(HOME); });
+    connect(done, &QPushButton::clicked, this, [this] { resetSession(); goTo(HOME); });
     nav->addWidget(done);
     return w;
 }
@@ -980,7 +980,7 @@ void PhotoBoothApp::goTo(Screen s) {
         if (!camera_->isRunning()) camera_->start();
     }
     if (s == EDITOR)     refreshEditor();
-    if (s == PRINT_VIEW) refreshPrint();
+    if (s == PRINT_VIEW) { refreshPrint(); saveSessionFinal(); }
 
     stack_->setCurrentIndex(s);
 }
@@ -1008,10 +1008,11 @@ QString PhotoBoothApp::makeSessionDir() {
 }
 
 void PhotoBoothApp::saveSessionFinal() {
-    if (sessionDir_.isEmpty()) {
-        qWarning() << "[SAVE] no session dir — nothing captured";
+    if (layoutImage_.empty() && editedImage_.empty() && capturedImage_.empty()) {
+        qWarning() << "[SAVE] nothing to save";
         return;
     }
+    if (sessionDir_.isEmpty()) sessionDir_ = makeSessionDir();  // fallback
     QDir().mkpath(sessionDir_);   // guarantee the day/time folder exists
 
     int ok = 0, fail = 0;
