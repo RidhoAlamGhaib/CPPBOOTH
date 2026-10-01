@@ -1,78 +1,72 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="18.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\build\IDPhotoBooth_autogen\mocs_compilation_Debug.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\build\IDPhotoBooth_autogen\mocs_compilation_Debug.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\src\main.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\src\Config.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\src\Config.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\src\EdsdkWrapper.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\src\EdsdkWrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\src\CameraThread.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\src\CameraThread.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\src\ImageService.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\src\ImageService.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\src\CameraPreview.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\src\CameraPreview.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\src\PhotoBoothApp.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\src\PhotoBoothApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\build\IDPhotoBooth_autogen\mocs_compilation_Release.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\build\IDPhotoBooth_autogen\mocs_compilation_Release.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\build\IDPhotoBooth_autogen\mocs_compilation_MinSizeRel.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\build\IDPhotoBooth_autogen\mocs_compilation_MinSizeRel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="C:\Users\Asus\Documents\idbooth\build\IDPhotoBooth_autogen\mocs_compilation_RelWithDebInfo.cpp">
+    <ClCompile Include="C:\Users\USER\Downloads\CPPBOOTH\build\IDPhotoBooth_autogen\mocs_compilation_RelWithDebInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\Asus\Documents\idbooth\src\Config.h">
+    <ClInclude Include="C:\Users\USER\Downloads\CPPBOOTH\src\Config.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Asus\Documents\idbooth\src\EdsdkWrapper.h">
+    <ClInclude Include="C:\Users\USER\Downloads\CPPBOOTH\src\EdsdkWrapper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Asus\Documents\idbooth\src\CameraThread.h">
+    <ClInclude Include="C:\Users\USER\Downloads\CPPBOOTH\src\CameraThread.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Asus\Documents\idbooth\src\ImageService.h">
+    <ClInclude Include="C:\Users\USER\Downloads\CPPBOOTH\src\ImageService.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Asus\Documents\idbooth\src\SizeCard.h">
+    <ClInclude Include="C:\Users\USER\Downloads\CPPBOOTH\src\SizeCard.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Asus\Documents\idbooth\src\CameraPreview.h">
+    <ClInclude Include="C:\Users\USER\Downloads\CPPBOOTH\src\CameraPreview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="C:\Users\Asus\Documents\idbooth\src\PhotoBoothApp.h">
+    <ClInclude Include="C:\Users\USER\Downloads\CPPBOOTH\src\PhotoBoothApp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\Asus\Documents\idbooth\CMakeLists.txt" />
+    <CustomBuild Include="C:\Users\USER\Downloads\CPPBOOTH\CMakeLists.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="C:\Users\Asus\Documents\idbooth\build\IDPhotoBooth_autogen\timestamp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="CMake Rules">
-      <UniqueIdentifier>{A4C8B124-4C6C-379B-91E3-4732A516C415}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{E410CF04-6B51-302F-B638-FCFE59428CAE}</UniqueIdentifier>
+      <UniqueIdentifier>{1B6C68E7-EA8D-328E-8DBF-73813156D2B7}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{EA6494C9-1539-39F7-BFAF-447170C97B5D}</UniqueIdentifier>
+      <UniqueIdentifier>{ADAC2B96-0E2F-348E-A5E3-B6E4DA8BF7E9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

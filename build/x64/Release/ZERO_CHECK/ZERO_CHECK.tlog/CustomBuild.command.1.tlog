@@ -1,6 +1,6 @@
-^C:\USERS\ASUS\DOCUMENTS\IDBOOTH\BUILD\CMAKEFILES\31D8EF19FD62FCFE6745B433AA86A05A\GENERATE.STAMP.RULE
+^C:\USERS\USER\DOWNLOADS\CPPBOOTH\BUILD\CMAKEFILES\B85EB7EC409801BA861AC38C37E6FFE5\GENERATE.STAMP.RULE
 setlocal
-"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Asus/Documents/idbooth -BC:/Users/Asus/Documents/idbooth/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Asus/Documents/idbooth/build/IDPhotoBooth.sln
+"C:\Program Files\Microsoft Visual Studio\18\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/USER/Downloads/CPPBOOTH -BC:/Users/USER/Downloads/CPPBOOTH/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/USER/Downloads/CPPBOOTH/build/IDPhotoBooth.slnx
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
 endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone

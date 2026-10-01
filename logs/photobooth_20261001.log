@@ -1,0 +1,8 @@
+20:34:38.749 INFO  ==================================================
+20:34:38.749 INFO  ID Photo Booth starting
+20:34:38.749 INFO    Base dir: "C:/Users/USER/Downloads/CPPBOOTH"
+20:34:38.749 INFO    Log file: "C:/Users/USER/Downloads/CPPBOOTH/logs/photobooth_20261001.log"
+20:34:38.749 INFO    Config  : "C:/Users/USER/Downloads/CPPBOOTH/config.json"
+20:34:38.749 INFO  ==================================================
+20:34:38.753 INFO  [CFG] loaded "C:/Users/USER/Downloads/CPPBOOTH/config.json" - 9 sizes
+20:34:41.948 INFO  Exiting with code 0

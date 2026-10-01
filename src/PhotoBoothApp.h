@@ -63,6 +63,7 @@ private:
     void refreshPrint();
     void resetSession();
     QString makeSessionDir();
+    void    saveSessionFinal();
 
     // ── styles ──
     QString navButtonStyle() const;

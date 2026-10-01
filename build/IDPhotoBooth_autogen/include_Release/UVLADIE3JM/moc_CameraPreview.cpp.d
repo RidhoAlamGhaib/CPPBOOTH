@@ -1,4 +1,4 @@
-C:/Users/Asus/Documents/idbooth/build/IDPhotoBooth_autogen/include_Release/UVLADIE3JM/moc_CameraPreview.cpp: C:/Users/Asus/Documents/idbooth/src/CameraPreview.h \
+C:/Users/USER/Downloads/CPPBOOTH/build/IDPhotoBooth_autogen/include_Release/UVLADIE3JM/moc_CameraPreview.cpp: C:/Users/USER/Downloads/CPPBOOTH/src/CameraPreview.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/QMap \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/QPointF \
   C:/Qt/6.7.3/msvc2022_64/include/QtCore/QRectF \
@@ -157,30 +157,31 @@ C:/Users/Asus/Documents/idbooth/build/IDPhotoBooth_autogen/include_Release/UVLAD
   C:/Qt/6.7.3/msvc2022_64/include/QtWidgets/qtwidgetsexports.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtWidgets/qtwidgetsglobal.h \
   C:/Qt/6.7.3/msvc2022_64/include/QtWidgets/qwidget.h \
-  C:/opencv/build/include/opencv2/core.hpp \
-  C:/opencv/build/include/opencv2/core/base.hpp \
-  C:/opencv/build/include/opencv2/core/bufferpool.hpp \
-  C:/opencv/build/include/opencv2/core/check.hpp \
-  C:/opencv/build/include/opencv2/core/cv_cpu_dispatch.h \
-  C:/opencv/build/include/opencv2/core/cvdef.h \
-  C:/opencv/build/include/opencv2/core/cvstd.hpp \
-  C:/opencv/build/include/opencv2/core/cvstd.inl.hpp \
-  C:/opencv/build/include/opencv2/core/cvstd_wrapper.hpp \
-  C:/opencv/build/include/opencv2/core/fast_math.hpp \
-  C:/opencv/build/include/opencv2/core/hal/interface.h \
-  C:/opencv/build/include/opencv2/core/mat.hpp \
-  C:/opencv/build/include/opencv2/core/mat.inl.hpp \
-  C:/opencv/build/include/opencv2/core/matx.hpp \
-  C:/opencv/build/include/opencv2/core/matx.inl.hpp \
-  C:/opencv/build/include/opencv2/core/neon_utils.hpp \
-  C:/opencv/build/include/opencv2/core/operations.hpp \
-  C:/opencv/build/include/opencv2/core/optim.hpp \
-  C:/opencv/build/include/opencv2/core/ovx.hpp \
-  C:/opencv/build/include/opencv2/core/persistence.hpp \
-  C:/opencv/build/include/opencv2/core/saturate.hpp \
-  C:/opencv/build/include/opencv2/core/traits.hpp \
-  C:/opencv/build/include/opencv2/core/types.hpp \
-  C:/opencv/build/include/opencv2/core/utility.hpp \
-  C:/opencv/build/include/opencv2/core/version.hpp \
-  C:/opencv/build/include/opencv2/core/vsx_utils.hpp \
-  C:/opencv/build/include/opencv2/opencv_modules.hpp
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/base.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/bufferpool.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/check.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/cv_cpu_dispatch.h \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/cvdef.h \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/cvstd.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/cvstd.inl.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/cvstd_wrapper.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/exception.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/fast_math.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/fwddecl.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/hal/interface.h \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/mat.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/mat.inl.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/matx.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/matx.inl.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/neon_utils.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/operations.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/optim.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/persistence.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/saturate.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/traits.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/types.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/utility.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/version.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/core/vsx_utils.hpp \
+  C:/Users/USER/Downloads/opencv/build/include/opencv2/opencv_modules.hpp
