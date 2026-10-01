@@ -3,6 +3,12 @@
 #include <QPixmap>
 #include <QFileInfo>
 #include <QDir>
+#include <QPdfWriter>
+#include <QPainter>
+#include <QPageSize>
+#include <QPageLayout>
+#include <QMarginsF>
+#include <QSizeF>
 #include <vector>
 #include <algorithm>
 #include <cmath>
@@ -269,6 +275,32 @@ bool ImageService::save(const cv::Mat& img, const QString& path, int jpegQuality
         params = { cv::IMWRITE_PNG_COMPRESSION, 3 };
     }
     return cv::imwrite(path.toLocal8Bit().constData(), img, params);
+}
+
+bool ImageService::savePdf(const cv::Mat& img, const QString& path,
+                           int paperWmm, int paperHmm, int dpi) {
+    if (img.empty()) return false;
+
+    QPdfWriter writer(path);
+    writer.setResolution(dpi);
+    // Custom paper size in millimetres (e.g. 4R = 152 x 102 mm), no margins.
+    writer.setPageSize(QPageSize(QSizeF(paperWmm, paperHmm), QPageSize::Millimeter));
+    writer.setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout::Millimeter);
+
+    const QImage page = toQImage(img);
+    if (page.isNull()) return false;
+
+    QPainter painter;
+    if (!painter.begin(&writer)) return false;
+    // Fill the full page rect (in device pixels at `dpi`), keeping aspect.
+    const QRect target = writer.pageLayout().paintRectPixels(dpi);
+    const QSize scaled = page.size().scaled(target.size(), Qt::KeepAspectRatio);
+    const QRect dst(target.x() + (target.width()  - scaled.width())  / 2,
+                    target.y() + (target.height() - scaled.height()) / 2,
+                    scaled.width(), scaled.height());
+    painter.drawImage(dst, page);
+    painter.end();
+    return true;
 }
 
 QImage ImageService::toQImage(const cv::Mat& bgr) {

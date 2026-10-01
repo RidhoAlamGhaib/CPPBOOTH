@@ -60,6 +60,10 @@ public:
     // ── I/O ──
     static bool save(const cv::Mat& img, const QString& path, int jpegQuality = 95);
 
+    // Write a single-page PDF sized to the paper (mm), with `img` scaled to fill.
+    static bool savePdf(const cv::Mat& img, const QString& path,
+                        int paperWmm = 152, int paperHmm = 102, int dpi = 300);
+
     // ── Qt interop ──
     static QImage  toQImage(const cv::Mat& bgr);
     static QPixmap toPixmap(const cv::Mat& bgr, const QSize& fit = {});

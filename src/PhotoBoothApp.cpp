@@ -752,6 +752,25 @@ QWidget* PhotoBoothApp::buildPrint() {
     addSave(QStringLiteral("💾  Simpan JPG"), "jpg", QStringLiteral("JPEG (*.jpg)"));
     addSave(QStringLiteral("💾  Simpan PNG"), "png", QStringLiteral("PNG (*.png)"));
 
+    {
+        auto* bpdf = new QPushButton(QStringLiteral("💾  Simpan PDF"));
+        bpdf->setStyleSheet(toolButtonStyle());
+        bpdf->setCursor(Qt::PointingHandCursor);
+        connect(bpdf, &QPushButton::clicked, this, [this] {
+            if (layoutImage_.empty()) return;
+            const QString def = QDir(sessionDir_.isEmpty() ? cfg_.output : sessionDir_)
+                                    .filePath("id_photo_4R.pdf");
+            const QString p = QFileDialog::getSaveFileName(this, QStringLiteral("Simpan PDF"),
+                                                           def, QStringLiteral("PDF (*.pdf)"));
+            if (p.isEmpty()) return;
+            if (ImageService::savePdf(layoutImage_, p, cfg_.paperWmm, cfg_.paperHmm, cfg_.dpi))
+                QMessageBox::information(this, QStringLiteral("Tersimpan"), p);
+            else
+                QMessageBox::warning(this, QStringLiteral("Gagal"), QStringLiteral("Tidak bisa menyimpan PDF."));
+        });
+        cl->addWidget(bpdf);
+    }
+
     auto* printBtn = new QPushButton(QStringLiteral("🖨  Cetak"));
     printBtn->setStyleSheet(QString("QPushButton { background: %1; color: %2; font-weight: 700;"
                                     "  font-size: 17px; padding: 14px; border-radius: 12px; border: none; }"
@@ -811,6 +830,17 @@ void PhotoBoothApp::refreshPrint() {
     cv::Mat thumb;
     cv::resize(layoutImage_, thumb, cv::Size(), 0.3, 0.3, cv::INTER_AREA);
     printPreview_->setPixmap(ImageService::toPixmap(thumb, printPreview_->size()));
+
+    // Auto-save the final deliverables into this session's own folder so every
+    // session is kept separately: the single edited photo, the 4R sheet, and a
+    // print-ready PDF. Reflects the current size/margin settings.
+    if (!sessionDir_.isEmpty()) {
+        ImageService::save(editedImage_,  QDir(sessionDir_).filePath("final_photo.jpg"));
+        ImageService::save(layoutImage_,  QDir(sessionDir_).filePath("final_layout_4R.jpg"));
+        ImageService::savePdf(layoutImage_, QDir(sessionDir_).filePath("final_layout_4R.pdf"),
+                              cfg_.paperWmm, cfg_.paperHmm, cfg_.dpi);
+        qInfo() << "[SAVE] session deliverables written to" << sessionDir_;
+    }
 }
 
 // ══════════════════════════════════════════════════════
