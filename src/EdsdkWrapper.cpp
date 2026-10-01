@@ -147,6 +147,15 @@ const char* errorName(Error e) {
         case PROPERTIES_UNAVAILABLE:  return "PROPERTIES_UNAVAILABLE";
         case COMM_DISCONNECTED:       return "COMM_DISCONNECTED";
         case INVALID_HANDLE:          return "INVALID_HANDLE";
+        case TAKE_PICTURE_AF_NG:            return "TAKE_PICTURE_AF_NG";
+        case TAKE_PICTURE_MIRROR_UP_NG:     return "TAKE_PICTURE_MIRROR_UP_NG";
+        case TAKE_PICTURE_SENSOR_CLEANING_NG: return "TAKE_PICTURE_SENSOR_CLEANING_NG";
+        case TAKE_PICTURE_NO_CARD_NG:       return "TAKE_PICTURE_NO_CARD_NG";
+        case TAKE_PICTURE_CARD_NG:          return "TAKE_PICTURE_CARD_NG";
+        case TAKE_PICTURE_CARD_PROTECT_NG:  return "TAKE_PICTURE_CARD_PROTECT_NG";
+        case TAKE_PICTURE_STROBO_CHARGE_NG: return "TAKE_PICTURE_STROBO_CHARGE_NG";
+        case TAKE_PICTURE_NO_LENS_NG:       return "TAKE_PICTURE_NO_LENS_NG";
+        case TAKE_PICTURE_MOVIE_MODE_NG:    return "TAKE_PICTURE_MOVIE_MODE_NG";
         default:                      return "UNKNOWN";
     }
 }
@@ -183,6 +192,25 @@ const char* errorHint(Error e) {
                    "(common for live view on some models). App will fall back to OpenCV.";
         case COMM_DISCONNECTED:
             return "USB connection dropped mid-session. Reconnect the cable.";
+        case TAKE_PICTURE_AF_NG:
+            return "Autofocus couldn't lock. Improve lighting / contrast on the subject, "
+                   "or set the lens AF/MF switch to MF and pre-focus.";
+        case TAKE_PICTURE_MIRROR_UP_NG:
+            return "Mirror lock-up is enabled in the camera menu — disable it.";
+        case TAKE_PICTURE_SENSOR_CLEANING_NG:
+            return "Camera is cleaning its sensor — wait a moment and retry.";
+        case TAKE_PICTURE_NO_CARD_NG:
+            return "No SD card in the camera. Insert one (required even when saving to PC).";
+        case TAKE_PICTURE_CARD_NG:
+            return "SD card error — reformat or replace the card.";
+        case TAKE_PICTURE_CARD_PROTECT_NG:
+            return "SD card is write-protected — slide the lock switch off.";
+        case TAKE_PICTURE_STROBO_CHARGE_NG:
+            return "Flash is still charging — wait and retry.";
+        case TAKE_PICTURE_NO_LENS_NG:
+            return "No lens attached (or lens not seated properly).";
+        case TAKE_PICTURE_MOVIE_MODE_NG:
+            return "Camera is in movie mode — switch to stills (P/Av/Tv/M).";
         default:
             return "Unrecognized code — check Canon's EDSDK error list, or "
                    "just power-cycle the camera and retry.";

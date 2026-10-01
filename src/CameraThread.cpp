@@ -526,6 +526,17 @@ cv::Mat CameraThread::captureEdsdk() {
                                          eds::SHUTTER_Completely);
         api.SendCommand(camera_, eds::CMD_PressShutterButton, eds::SHUTTER_OFF);
         if (err == eds::OK) { fired = true; break; }
+        // AF couldn't lock (low light / low contrast / plain backdrop). Fire
+        // anyway without autofocus — focus stays where the lens already is,
+        // which for a fixed-distance booth is fine. TakePicture would AF again
+        // and fail the same way, so don't fall through to it.
+        if (err == eds::TAKE_PICTURE_AF_NG) {
+            qWarning() << "[EDS] AF failed to lock — firing without AF";
+            err = api.SendCommand(camera_, eds::CMD_PressShutterButton,
+                                  eds::SHUTTER_Completely_NonAF);
+            api.SendCommand(camera_, eds::CMD_PressShutterButton, eds::SHUTTER_OFF);
+            if (err == eds::OK) { fired = true; break; }
+        }
         if (err == eds::DEVICE_BUSY || err == eds::OBJECT_NOTREADY) {
             msleep(30);
             continue;

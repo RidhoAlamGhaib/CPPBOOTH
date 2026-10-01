@@ -54,6 +54,17 @@ constexpr Error PROPERTIES_UNAVAILABLE = 0x00000061;
 constexpr Error COMM_DISCONNECTED  = 0x000000C3;
 constexpr Error INVALID_HANDLE     = 0x00000060;
 
+// Take-picture errors (EDS_ERR_TAKE_PICTURE_*) — returned by the shutter commands
+constexpr Error TAKE_PICTURE_AF_NG           = 0x00008D01;  // autofocus failed to lock
+constexpr Error TAKE_PICTURE_MIRROR_UP_NG    = 0x00008D03;
+constexpr Error TAKE_PICTURE_SENSOR_CLEANING_NG = 0x00008D04;
+constexpr Error TAKE_PICTURE_NO_CARD_NG      = 0x00008D06;
+constexpr Error TAKE_PICTURE_CARD_NG         = 0x00008D07;
+constexpr Error TAKE_PICTURE_CARD_PROTECT_NG = 0x00008D08;
+constexpr Error TAKE_PICTURE_STROBO_CHARGE_NG = 0x00008D0A;
+constexpr Error TAKE_PICTURE_NO_LENS_NG      = 0x00008D0B;
+constexpr Error TAKE_PICTURE_MOVIE_MODE_NG   = 0x00008D0E;
+
 constexpr uint32_t CMD_TakePicture        = 0x00000000;
 constexpr uint32_t CMD_PressShutterButton = 0x00000004;
 constexpr uint32_t SHUTTER_Halfway          = 0x00000001;
