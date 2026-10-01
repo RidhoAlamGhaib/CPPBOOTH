@@ -210,8 +210,7 @@ bool CameraThread::tryStartEdsdk() {
         STEP(QString("OpenSession attempt %1").arg(attempt).toLatin1().constData(), err);
         if (err == eds::OK) break;
 
-        if ((err == eds::DEVICE_INTERNAL_ERROR || err == eds::DEVICE_BUSY_D ||
-             err == eds::DEVICE_BUSY) && attempt < 2) {
+        if ((err == eds::DEVICE_INTERNAL_ERROR || err == eds::DEVICE_BUSY) && attempt < 2) {
             pumpWindowsMessages();
             msleep(500 * (attempt + 1));
             continue;
@@ -337,7 +336,7 @@ bool CameraThread::tryStartEdsdk() {
                         << QString("0x%1").arg(grabErr, 8, 16, QChar('0'))
                         << eds::errorName(grabErr);
 
-            if (grabErr != eds::OBJECT_NOTREADY_EVF && grabErr != eds::OBJECT_NOTREADY) {
+            if (grabErr != eds::OBJECT_NOTREADY) {
                 qInfo() << "[EDS] hard error while waiting, aborting cycle";
                 break;
             }

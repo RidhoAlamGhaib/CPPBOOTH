@@ -128,7 +128,6 @@ const char* errorName(Error e) {
     switch (e) {
         case OK:                      return "OK";
         case DEVICE_NOT_FOUND:        return "DEVICE_NOT_FOUND";
-        case DEVICE_BUSY_D:           return "DEVICE_BUSY";
         case DEVICE_INVALID:          return "DEVICE_INVALID";
         case DEVICE_EMERGENCY:        return "DEVICE_EMERGENCY";
         case DEVICE_MEMORY_FULL:      return "DEVICE_MEMORY_FULL";
@@ -139,10 +138,9 @@ const char* errorName(Error e) {
         case DEVICE_CF_GATE_CHANGED:  return "DEVICE_CF_GATE_CHANGED";
         case DEVICE_DIAL_CHANGED:     return "DEVICE_DIAL_CHANGED";
         case DEVICE_NOT_INSTALLED:    return "DEVICE_NOT_INSTALLED";
-        case OBJECT_NOTREADY_EVF: return "OBJECT_NOTREADY";
         case DEVICE_STAY_AWAKE:       return "DEVICE_STAY_AWAKE";
         case DEVICE_NOT_RELEASED:     return "DEVICE_NOT_RELEASED";
-        case DEVICE_BUSY:             return "DEVICE_BUSY (comm layer)";
+        case DEVICE_BUSY:             return "DEVICE_BUSY";
         case OBJECT_NOTREADY:         return "OBJECT_NOTREADY";
         case PROPERTIES_UNAVAILABLE:  return "PROPERTIES_UNAVAILABLE";
         case COMM_DISCONNECTED:       return "COMM_DISCONNECTED";
@@ -165,7 +163,6 @@ const char* errorHint(Error e) {
         case DEVICE_NOT_FOUND:
             return "Camera not seen by EDSDK. Check: USB cable plugged in, "
                    "camera powered ON, mode dial NOT on Auto/Video.";
-        case DEVICE_BUSY_D:
         case DEVICE_BUSY:
             return "Camera is busy/locked by another program. Close EOS Utility, "
                    "EOS Webcam Utility, or any other Canon software, then retry.";
@@ -175,7 +172,7 @@ const char* errorHint(Error e) {
         case DEVICE_NOT_INSTALLED:
             return "No camera driver / camera not recognized by Windows. "
                    "Check Device Manager for a driver warning icon.";
-        case OBJECT_NOTREADY_EVF:
+        case OBJECT_NOTREADY:
             return "Live View engine not ready. Enable 'Live View shoot.' in the "
                    "camera's menu, set the mode dial to P/Av/Tv/M (not Auto/Movie), "
                    "and close any other Canon software holding the camera.";
