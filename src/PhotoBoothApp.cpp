@@ -19,7 +19,6 @@
 #include <QDebug>
 #include <QPainter>
 #include <QPrinter>
-#include <QPrintDialog>
 #include <QPageSize>
 #include <QPageLayout>
 #include <QMarginsF>
@@ -800,15 +799,20 @@ QWidget* PhotoBoothApp::buildPrint() {
     connect(printBtn, &QPushButton::clicked, this, [this] {
         if (layoutImage_.empty()) return;
 
+        // Print straight to the system default printer — no dialog.
         QPrinter printer(QPrinter::HighResolution);
         printer.setFullPage(true);
         printer.setPageSize(QPageSize(QSizeF(cfg_.paperWmm, cfg_.paperHmm),
                                       QPageSize::Millimeter));
         printer.setPageMargins(QMarginsF(0, 0, 0, 0), QPageLayout::Millimeter);
+        printer.setColorMode(QPrinter::Color);
+        printer.setCopyCount(1);
 
-        QPrintDialog dlg(&printer, this);
-        dlg.setWindowTitle(QStringLiteral("Cetak"));
-        if (dlg.exec() != QDialog::Accepted) return;
+        if (printer.printerName().isEmpty() || !printer.isValid()) {
+            QMessageBox::warning(this, QStringLiteral("Cetak"),
+                QStringLiteral("Tidak ada printer default. Set printer default di Windows."));
+            return;
+        }
 
         const QImage page = ImageService::toQImage(layoutImage_);
         if (page.isNull()) {
@@ -820,7 +824,7 @@ QWidget* PhotoBoothApp::buildPrint() {
         QPainter painter;
         if (!painter.begin(&printer)) {
             QMessageBox::warning(this, QStringLiteral("Cetak"),
-                                 QStringLiteral("Printer tidak bisa dibuka."));
+                QStringLiteral("Printer tidak bisa dibuka: %1").arg(printer.printerName()));
             return;
         }
         const QRectF target = printer.pageRect(QPrinter::DevicePixel);
@@ -833,7 +837,7 @@ QWidget* PhotoBoothApp::buildPrint() {
 
         qInfo() << "[PRINT] sent to" << printer.printerName();
         QMessageBox::information(this, QStringLiteral("Cetak"),
-                                 QStringLiteral("Dikirim ke printer."));
+            QStringLiteral("Dikirim ke printer: %1").arg(printer.printerName()));
     });
     cl->addWidget(printBtn);
     cl->addStretch(1);
