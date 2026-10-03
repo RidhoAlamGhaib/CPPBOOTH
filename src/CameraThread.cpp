@@ -259,11 +259,16 @@ bool CameraThread::tryStartEdsdk() {
     err = api.SetCapacity(camera_, cap);
     STEP("SetCapacity", err);
 
-    // JPEG Middle Fine (~12MP on 200D II) is plenty for ID photos and is
-    // roughly half the USB transfer of Large Fine → much faster capture.
-    uint32_t quality = eds::ImageQuality_MJF;
-    err = api.SetPropertyData(camera_, eds::PROP_ImageQuality, 0, sizeof(quality), &quality);
-    STEP("SetPropertyData(ImageQuality=M Fine)", err);
+    // Do NOT override ImageQuality — honor whatever size/quality is set on the
+    // camera (L / M / S JPEG). NOTE: capture pipeline decodes JPEG only
+    // (cv::imread/imdecode); a RAW (.CR2/.CR3) setting will download but fail
+    // to decode. Keep the camera on a JPEG quality.
+    {
+        uint32_t q = 0;
+        if (api.GetPropertyData &&
+            api.GetPropertyData(camera_, eds::PROP_ImageQuality, 0, sizeof(q), &q) == eds::OK)
+            qInfo().noquote() << QString("[EDS] ImageQuality = 0x%1").arg(q, 8, 16, QChar('0'));
+    }
 
     api.SetObjectEventHandler(camera_, eds::OBJEVENT_All, &CameraThread::onObjectEvent, nullptr);
     // Property + state handlers are required for EdsGetEvent to deliver the
@@ -414,6 +419,14 @@ void CameraThread::stopEdsdk() {
         // Turn the live-view function back off too.
         uint32_t evfOff = 0;
         api.SetPropertyData(camera_, eds::PROP_Evf_Mode, 0, sizeof(evfOff), &evfOff);
+
+        // Let the camera actually apply "live view off" before we close the
+        // session — otherwise the body keeps its screen/LV engaged after exit.
+        for (int i = 0; i < 20; ++i) {
+            if (api.GetEvent) api.GetEvent();
+            pumpWindowsMessages();
+            msleep(25);
+        }
 
         // Always release the UI lock we took.
         if (api.SendStatusCommand)
